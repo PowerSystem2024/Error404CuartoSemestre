@@ -78,7 +78,7 @@ public class EstudianteDAO {
     public boolean agregarEstudiante(Estudiante estudiante){
         PreparedStatement ps;
         Connection con = getConexion();
-        String sql = "INSERT INTO estudiantes2025.estudiantes2025(nombre, apellido, telefono,email) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO estudiantes2025(nombre, apellido, telefono,email) VALUES (?, ?, ?, ?)";
         try{
             ps = con.prepareStatement(sql);
             ps.setString(1, estudiante.getNombre());
@@ -105,7 +105,7 @@ public class EstudianteDAO {
     public boolean modificarEstudiante(Estudiante estudiante){
         PreparedStatement ps;
         Connection con = getConexion();
-        String sql = "UPDATE estudiantes2025.estudianntes2025 SET nombre=?, apellido=?, telefono=?, email=? WHERE id_estudiantes2025=?";
+        String sql = "UPDATE estudiantes2025 SET nombre=?, apellido=?, telefono=?, email=? WHERE id_estudiantes2025=?";
         try{
             ps = con.prepareStatement(sql);
             ps.setString(1, estudiante.getNombre());
@@ -131,7 +131,7 @@ public class EstudianteDAO {
     public boolean eliminarEstudiante (Estudiante estudiante){
         PreparedStatement ps;
         Connection con = getConexion();
-        String sql = "DELETE FROM estudiantes2025.estudiantes2025 WHERE id_estudiantes2025=?";
+        String sql = "DELETE FROM estudiantes2025 WHERE id_estudiantes2025=?";
         try {
             ps = con.prepareStatement (sql);
             ps.setInt(1,estudiante.getIdEstudiante());

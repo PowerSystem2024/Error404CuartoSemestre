@@ -1,7 +1,7 @@
 -- Comenzamos con CRUD: create(insertar), read(leer), update(actualizar), delete(eliminar)
 
 -- Listar los estudiantes (read)
-SELECT * FROM estudiantes.estudiantes2025;
+SELECT * FROM estudiantes2025;
 
 -- Insertar estudiante
 INSERT INTO estudiantes2025 (nombre, apellido, telefono, email) VALUES ("Juan", "Perez", "261454564", "juan@gmail.com");
