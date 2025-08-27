@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>LA LEYENDA DE AANG: AVATAR</title>
+</head>
+
+<body>
+    <h1>Avatar: La Leyenda de Aang</h1>
+
+    <!-- Botón para abrir el modal -->
+    <section class="seccion-reglas">
+        <button id="boton-reglas">Reglas del Juego</button>
+    </section>
+
+    <!-- Modal de reglas -->
+    <div id="modal-reglas" class="modal" style="display:none;">
+        <div class="modal-contenido">
+            <span class="cerrar-modal" id="cerrar-reglas">&times;</span>
+            <h2>Reglas del Juego</h2>
+            <ul>
+                <li>Selecciona un personaje antes de atacar.</li>
+                <li>Cada jugador empieza con 3 vidas.</li>
+                <li>Perder un combate resta una vida</li>
+                <li>Los ataques son: Puño, Patada o Barrida.</li>
+                <li>Puño vence a Barrida</li>
+                <li>Patada vence a Puño</li>
+                <li>Barrida vence a Patada</li>
+            </ul>
+        </div>
+    </div>
+
+    <section class="seleccionar-personaje" id="seleccionar-personaje">
+        <h2>Elige tu personaje</h2>
+        <div class="personajes-select">
+            <input type="radio" name="personaje" id="zuko" />
+            <label for="zuko">
+                <img src="assets/Zuko.jpg" alt="Zuko" class="personaje-img" />
+                Zuko
+            </label>
+            <input type="radio" name="personaje" id="katara" />
+            <label for="katara">
+                <img src="assets/Katara.jpeg" alt="Katara" class="personaje-img" />
+                Katara
+            </label>
+            <input type="radio" name="personaje" id="toph" />
+            <label for="toph">
+                <img src="assets/Toph.jpeg" alt="Toph" class="personaje-img" />
+                Toph
+            </label>
+            <input type="radio" name="personaje" id="aang" />
+            <label for="aang">
+                <img src="assets/Aang.jpeg" alt="Aang" class="personaje-img" />
+                Aang
+            </label>
+        </div>
+        <button id="boton-personaje">Seleccionar</button>
+    </section>
+
+    <section id="seleccionar-ataque" style="display:none;">
+        <h2>Elige tu ataque</h2>
+        <p>Tu personaje <span id="personaje-jugador"></span> tiene <span id="vidas-jugador">3</span> vidas</p>
+        <p>El personaje <span id="personaje-enemigo"></span> de tu enemigo tiene <span id="vidas-enemigo">3</span> vidas
+        </p>
+        <p>
+            Elige un ataque:
+            <br />
+            <button id="boton-punio">Puño 👊</button>
+            <button id="boton-patada">Patada 🦵</button>
+            <button id="boton-barrida">Barrida 👣</button>
+        </p>
+    </section>
+
+    <section id="mensajes"></section>
+
+    <section id="reiniciar" style="display:none;">
+        <button id="btn-reiniciar">Reiniciar</button>
+    </section>
+
+    <script src="js/avatar.js"></script>
+</body>
+
+</html>
