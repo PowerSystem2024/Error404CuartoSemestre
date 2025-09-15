@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8" />
@@ -33,6 +33,7 @@
         </div>
     </div>
 
+    <!-- Sección de selección de personaje -->
     <section class="seleccionar-personaje" id="seleccionar-personaje">
         <h2>Elige tu personaje</h2>
         <div class="personajes-select">
@@ -57,29 +58,53 @@
                 Aang
             </label>
         </div>
-        <button id="boton-personaje">Seleccionar</button>
+        <button id="boton-personaje">Seleccionar Personaje</button>
     </section>
 
+    <!-- Sección de combate -->
     <section id="seleccionar-ataque" style="display:none;">
-        <h2>Elige tu ataque</h2>
-        <p>Tu personaje <span id="personaje-jugador"></span> tiene <span id="vidas-jugador">3</span> vidas</p>
-        <p>El personaje <span id="personaje-enemigo"></span> de tu enemigo tiene <span id="vidas-enemigo">3</span> vidas
-        </p>
-        <p>
-            Elige un ataque:
-            <br />
-            <button id="boton-punio">Puño 👊</button>
-            <button id="boton-patada">Patada 🦵</button>
-            <button id="boton-barrida">Barrida 👣</button>
-        </p>
+        <h2>¡A Combatir!</h2>
+
+        <!-- Información de vidas -->
+        <div class="info-vidas">
+            <p class="info-jugador">
+                Tu personaje: <span id="personaje-jugador" class="nombre-personaje"></span>
+                - Vidas: <span id="vidas-jugador" class="vidas">3</span>
+            </p>
+            <p class="info-enemigo">
+                Enemigo: <span id="personaje-enemigo" class="nombre-personaje"></span>
+                - Vidas: <span id="vidas-enemigo" class="vidas">3</span>
+            </p>
+        </div>
+
+        <!-- Botones de ataque y reiniciar -->
+        <div class="botones-ataque">
+            <h3>Elige tu ataque:</h3>
+            <div class="contenedor-botones">
+                <button id="boton-punio" class="boton-ataque">Puño 👊</button>
+                <button id="boton-patada" class="boton-ataque">Patada 🦵</button>
+                <button id="boton-barrida" class="boton-ataque">Barrida 👣</button>
+                <button id="btn-reiniciar" class="boton-reiniciar" style="display:none;">🔄 Reiniciar</button>
+            </div>
+        </div>
+
+        <!-- Área de mensajes del combate -->
+        <section id="mensajes" class="mensajes-combate">
+            <!-- Aquí aparecerán los mensajes del combate -->
+        </section>
     </section>
 
-    <section id="mensajes"></section>
+    <!-- Botones fijos para pantallas pequeñas (opcional) -->
+    <div id="ataques-fijos" class="ataques-fijos" style="display:none;">
+        <button id="boton-punio-fijo" class="boton-fijo">👊</button>
+        <button id="boton-patada-fijo" class="boton-fijo">🦵</button>
+        <button id="boton-barrida-fijo" class="boton-fijo">👣</button>
+    </div>
+    <div id="reiniciar-fijo" class="reiniciar-fijo" style="display:none;">
+        <button id="btn-reiniciar-fijo" class="boton-fijo">🔄</button>
+    </div>
 
-    <section id="reiniciar" style="display:none;">
-        <button id="btn-reiniciar">Reiniciar</button>
-    </section>
-
+    <!-- Script del juego -->
     <script src="js/avatar.js"></script>
 </body>
 
