@@ -1,3 +1,90 @@
+#reiniciar {
+  text-align: center;
+  margin: 16px 0 0 0;
+}
+
+#btn-reiniciar {
+  font-size: 1.1em;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  background: #f0ad4e;
+  color: #222;
+  font-weight: bold;
+  box-shadow: 0 2px 6px #0002;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+#btn-reiniciar:active {
+  background: #ffd54f;
+}
+
+#mensajes {
+  max-height: 30vh;
+  min-height: 60px;
+  overflow-y: auto;
+  margin-bottom: 80px;
+  scroll-behavior: smooth;
+}
+
+#mensajes p {
+  background-color: #fcf8e3;
+  border-left: 6px solid #f0ad4e;
+  padding: 10px;
+  font-style: italic;
+  color: #5c3d1e;
+  margin-bottom: 6px;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+#mensajes p.mensaje-ultimo {
+  background-color: #ffe082;
+  color: #222;
+  font-weight: bold;
+  box-shadow: 0 0 8px #f0ad4e;
+}
+
+/* Botones fijos en la parte inferior */
+#botones-fijos {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+#ataques-fijos,
+#reiniciar-fijo {
+  display: flex;
+  gap: 10px;
+  margin: 8px 0;
+  pointer-events: auto;
+}
+
+#ataques-fijos button,
+#reiniciar-fijo button {
+  font-size: 1.1em;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  background: #f0ad4e;
+  color: #222;
+  font-weight: bold;
+  box-shadow: 0 2px 6px #0002;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+#ataques-fijos button:active,
+#reiniciar-fijo button:active {
+  background: #ffd54f;
+}
+
 /* Estilos generales */
 html,
 body {
@@ -110,12 +197,69 @@ button:active {
 }
 
 /* Mensajes */
+#mensajes {
+  max-height: 30vh;
+  min-height: 60px;
+  overflow-y: auto;
+  margin-bottom: 80px;
+  scroll-behavior: smooth;
+}
+
 #mensajes p {
   background-color: #fcf8e3;
   border-left: 6px solid #f0ad4e;
   padding: 10px;
   font-style: italic;
   color: #5c3d1e;
+  margin-bottom: 6px;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+#mensajes p.mensaje-ultimo {
+  background-color: #ffe082;
+  color: #222;
+  font-weight: bold;
+  box-shadow: 0 0 8px #f0ad4e;
+}
+
+/* Botones fijos en la parte inferior */
+#botones-fijos {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+#ataques-fijos,
+#reiniciar-fijo {
+  display: flex;
+  gap: 10px;
+  margin: 8px 0;
+  pointer-events: auto;
+}
+
+#ataques-fijos button,
+#reiniciar-fijo button {
+  font-size: 1.1em;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  background: #f0ad4e;
+  color: #222;
+  font-weight: bold;
+  box-shadow: 0 2px 6px #0002;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+#ataques-fijos button:active,
+#reiniciar-fijo button:active {
+  background: #ffd54f;
 }
 
 /* Modal reglas */
