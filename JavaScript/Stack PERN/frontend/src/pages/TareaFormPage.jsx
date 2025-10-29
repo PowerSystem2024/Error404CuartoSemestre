@@ -1,7 +1,7 @@
 import { Card, Input, Label, Button } from "../components/UI"
 import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useTareas } from '../context/TareasContext.jsx'
 
 
@@ -15,6 +15,7 @@ function TareaFormPage() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { errors: tareasErrors, loading, obtenerTareaById, crearNuevaTarea, actualizarTareaById } = useTareas();
+  const [postErrors, setPostErrors] = useState(null);
 
   // Para ver los valores del formulario
   const watchAllFields = watch();
@@ -49,18 +50,14 @@ function TareaFormPage() {
       setPostErrors(null);
       if (id) {
         // Actualizar tarea existente
-        const res = await actualizarTarea(id, data);
-        console.log('Tarea actualizada:', res);
-        if (res.status === 200) {
-          navigate('/tareas');
-        }
+        await actualizarTareaById(id, data);
+        console.log('Tarea actualizada');
+        navigate('/tareas');
       } else {
         // Crear nueva tarea
-        const res = await crearTarea(data);
-        console.log('Tarea creada:', res);
-        if (res.status === 201) {
-          navigate('/tareas');
-        }
+        await crearNuevaTarea(data);
+        console.log('Tarea creada');
+        navigate('/tareas');
       }
     } catch (error) {
       console.log('Error completo:', error);

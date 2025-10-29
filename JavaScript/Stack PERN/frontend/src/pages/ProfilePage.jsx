@@ -41,7 +41,11 @@ function ProfilePage() {
               <div className="space-y-2">
                 <p className="text-gray-400 text-sm">Fecha de Registro</p>
                 <p className="text-white font-medium">
-                  {user?.createdat ? new Date(user.createdat).toLocaleDateString('es-ES') : 'N/A'}
+                  {user?.fecha_registro ? new Date(user.fecha_registro).toLocaleDateString('es-ES', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  }) : 'N/A'}
                 </p>
               </div>
             </div>
