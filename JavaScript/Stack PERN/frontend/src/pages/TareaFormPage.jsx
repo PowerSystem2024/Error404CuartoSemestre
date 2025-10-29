@@ -1,70 +1,74 @@
 import { Card, Input, Label, Button } from "../components/UI"
 import { useForm } from 'react-hook-form'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useLocation, Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useTareas } from '../context/TareasContext.jsx'
 
 
 function TareaFormPage() {
-  const { register, handleSubmit, formState: { errors }, reset, watch } = useForm({
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({
     defaultValues: {
       titulo: '',
       descripcion: ''
     }
   });
   const navigate = useNavigate();
+  const location = useLocation();
   const { id } = useParams();
-  const { errors: tareasErrors, loading, obtenerTareaById, crearNuevaTarea, actualizarTareaById } = useTareas();
+  const { errors: tareasErrors, loading, obtenerTareaById, crearNuevaTarea, actualizarTareaById, eliminarTareaById } = useTareas();
   const [postErrors, setPostErrors] = useState(null);
+  const [loadingTarea, setLoadingTarea] = useState(false);
+  const [tarea, setTarea] = useState(null);
 
-  // Para ver los valores del formulario
-  const watchAllFields = watch();
-  console.log('Valores del formulario:', watchAllFields);
+  // Detectar si estamos en modo "ver", "editar" o "crear"
+  const isViewMode = id && !location.pathname.includes('/editar/');
+  const isEditMode = id && location.pathname.includes('/editar/');
+  const isCreateMode = !id;
 
   useEffect(() => {
     const cargarTarea = async () => {
       if (id) {
         try {
-          console.log('Cargando tarea con id:', id);
-          const tarea = await obtenerTareaById(id);
-          console.log('Tarea obtenida:', tarea);
+          setLoadingTarea(true);
+          setPostErrors(null);
+          const tareaObtenida = await obtenerTareaById(id);
 
-          console.log('Haciendo reset con:', {
-            titulo: tarea.titulo,
-            descripcion: tarea.descripcion
-          });
-          reset({
-            titulo: tarea.titulo,
-            descripcion: tarea.descripcion
-          });
+          if (tareaObtenida) {
+            setTarea(tareaObtenida);
+            reset({
+              titulo: tareaObtenida.titulo,
+              descripcion: tareaObtenida.descripcion
+            });
+          } else {
+            setPostErrors([{ message: 'Tarea no encontrada' }]);
+            setTimeout(() => navigate('/tareas'), 2000);
+          }
         } catch (error) {
           console.log('Error al cargar tarea:', error);
+          setPostErrors([{ message: 'Error al cargar la tarea. Redirigiendo...' }]);
+          setTimeout(() => navigate('/tareas'), 2000);
+        } finally {
+          setLoadingTarea(false);
         }
       }
     };
     cargarTarea();
-  }, [id, reset]);
+  }, [id, reset, navigate, obtenerTareaById]);
 
   const onSubmit = handleSubmit(async (data) => {
     try {
       setPostErrors(null);
-      if (id) {
-        // Actualizar tarea existente
+      if (isEditMode) {
         await actualizarTareaById(id, data);
-        console.log('Tarea actualizada');
         navigate('/tareas');
-      } else {
-        // Crear nueva tarea
+      } else if (isCreateMode) {
         await crearNuevaTarea(data);
-        console.log('Tarea creada');
         navigate('/tareas');
       }
     } catch (error) {
       console.log('Error completo:', error);
-      console.log('Error response:', error.response);
       if (error.response && error.response.data) {
         const errores = Array.isArray(error.response.data) ? error.response.data : [error.response.data];
-        console.log('Errores procesados:', errores);
         setPostErrors(errores);
       } else {
         setPostErrors([{ message: 'Error de conexión. Verifica que el servidor esté corriendo.' }]);
@@ -72,12 +76,92 @@ function TareaFormPage() {
     }
   });
 
+  const handleEliminar = async () => {
+    if (window.confirm('¿Estás seguro de eliminar esta tarea?')) {
+      try {
+        await eliminarTareaById(id);
+        navigate('/tareas');
+      } catch (error) {
+        console.log('Error al eliminar:', error);
+        setPostErrors([{ message: 'Error al eliminar la tarea' }]);
+      }
+    }
+  };
+
+  // Modo Ver (solo lectura)
+  if (isViewMode) {
+    if (loadingTarea) {
+      return (
+        <Card>
+          <p className="text-center text-gray-500">Cargando tarea...</p>
+        </Card>
+      );
+    }
+
+    return (
+      <div className="max-w-2xl mx-auto">
+        <Card>
+          {postErrors && postErrors.length > 0 && (
+            <div className="mb-4">
+              {postErrors.map((error, index) => (
+                <div key={index} className='bg-red-500 text-white p-2 rounded mb-2'>
+                  {error.message}
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div className="space-y-6">
+            <div className="flex items-center justify-between border-b border-gray-700 pb-4">
+              <Link
+                to="/tareas"
+                className="text-sky-400 hover:text-sky-300 flex items-center gap-2"
+              >
+                ← Volver a tareas
+              </Link>
+              <span className="text-gray-500 text-sm">ID: {tarea?.id}</span>
+            </div>
+
+            <div>
+              <h3 className="text-sm text-gray-400 mb-2">Título</h3>
+              <h1 className="text-3xl font-bold text-white">{tarea?.titulo}</h1>
+            </div>
+
+            <div>
+              <h3 className="text-sm text-gray-400 mb-2">Descripción</h3>
+              <p className="text-lg text-gray-300 leading-relaxed">
+                {tarea?.descripcion}
+              </p>
+            </div>
+
+            <div className="flex gap-3 pt-4 border-t border-gray-700">
+              <Button
+                onClick={() => navigate(`/tareas/editar/${tarea.id}`)}
+                className="flex-1"
+              >
+                Editar Tarea
+              </Button>
+              <button
+                onClick={handleEliminar}
+                className="flex-1 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition-colors"
+              >
+                Eliminar Tarea
+              </button>
+            </div>
+          </div>
+        </Card>
+      </div>
+    );
+  }
+
+  // Modo Crear/Editar (formulario)
+
   return (
     <div>
       <Card>
-        <h2 className="text-bold my-4">{id ? 'Editar Tarea' : 'Nueva Tarea'}</h2>
+        <h2 className="text-bold my-4">{isEditMode ? 'Editar Tarea' : 'Nueva Tarea'}</h2>
 
-        {loading && <p className="text-gray-500 mb-4">Cargando tarea...</p>}
+        {(loading || loadingTarea) && <p className="text-gray-500 mb-4">Cargando tarea...</p>}
 
         {postErrors && postErrors.length > 0 && (
           <div className="mb-4">
