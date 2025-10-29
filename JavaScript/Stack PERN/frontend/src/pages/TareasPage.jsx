@@ -21,7 +21,9 @@ function TareasPage() {
 
     if (loading) {
         return <div className="text-center py-8">Cargando tareas...</div>;
-    } return (
+    }
+
+    return (
         <div>
             <div className="flex justify-between items-center mb-4">
                 <h1 className="text-2xl font-bold">Mis Tareas</h1>
@@ -37,9 +39,11 @@ function TareasPage() {
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {tareas.map((tarea) => (
-                        <Card key={tarea.id}>
-                            <h3 className="text-xl font-bold mb-2">{tarea.titulo}</h3>
-                            <p className="text-gray-600 mb-4">{tarea.descripcion}</p>
+                        <Card key={tarea.id} className="cursor-pointer hover:border-sky-500 transition-colors">
+                            <div onClick={() => navigate(`/tareas/${tarea.id}`)}>
+                                <h3 className="text-xl font-bold mb-2">{tarea.titulo}</h3>
+                                <p className="text-gray-600 mb-4">{tarea.descripcion}</p>
+                            </div>
                             <div className="flex gap-2">
                                 <Button onClick={() => navigate(`/tareas/editar/${tarea.id}`)}>
                                     Editar
