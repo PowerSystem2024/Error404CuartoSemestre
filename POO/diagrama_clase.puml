@@ -1,0 +1,157 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam wrapWidth 220
+skinparam maxMessageSize 200
+skinparam shadowing false
+skinparam backgroundColor #FFFFFF
+skinparam classBorderColor #555
+skinparam classBackgroundColor #EEE
+skinparam defaultFontName Ariala
+skinparam defaultFontSize 12
+
+enum MedioPago {
+  TARJETA
+  TRANSFERENCIA
+  CONTRAENTREGA
+}
+enum EstadoOrden {
+  PENDIENTE_PAGO
+  PAGADA
+  PREPARACION
+  ENVIADA
+  ENTREGADA
+  CANCELADA
+}
+enum EstadoReclamo {
+  ABIERTO
+  EN_REVISION
+  RESUELTO_REEMBOLSO
+  RESUELTO_REEMPLAZO
+  CERRADO
+}
+
+class Direccion {
+  +calle: String
+  +numero: String
+  +ciudad: String
+  +provincia: String
+  +pais: String
+  +codigoPostal: String
+}
+
+' Entidades principales
+class Cliente {
+  +id: UUID
+  +nombre: String
+  +email: String
+  -hashPassword: String
+  +registrarse()
+  +iniciarSesion()
+}
+
+class Administrador {
+  +id: UUID
+  +nombre: String
+  +email: String
+  -hashPassword: String
+  +agregarProducto()
+  +modificarProducto()
+  +eliminarProducto()
+  +actualizarStock()
+  +resolverReclamo()
+}
+
+class Producto {
+  +id: UUID
+  +nombre: String
+  +descripcion: String
+  +precioUnitario: Money
+  +stockDisponible: int
+  +estaDisponible(cantidad:int): boolean
+}
+
+class Carrito {
+  +id: UUID
+  +fechaCreacion: DateTime
+  +agregarProducto()
+  +quitarProducto()
+  +actualizarCantidad()
+  +total(): Money
+  +verificarStock(): boolean
+}
+
+class ItemCarrito {
+  +cantidad: int
+  +subtotal(): Money
+}
+
+class Orden {
+  +id: UUID
+  +fecha: DateTime
+  +estado: EstadoOrden
+  +total: Money
+  +confirmarPago()
+  +cambiarEstado()
+}
+
+class LineaOrden {
+  +cantidad: int
+  +precioUnitario: Money
+  +subtotal(): Money
+}
+
+class Pago {
+  +id: UUID
+  +monto: Money
+  +medio: MedioPago
+  +autorizado: boolean
+  +fecha: DateTime
+  +procesar(): boolean
+}
+
+class Envio {
+  +id: UUID
+  +direccionEntrega: Direccion
+  +fechaDespacho: DateTime
+  +fechaEntregaEstimada: DateTime
+  +fechaEntregaReal: DateTime
+  +estado: String
+  +asignarRepartidor()
+  +registrarEntrega()
+}
+
+class Repartidor {
+  +id: UUID
+  +nombre: String
+  +documento: String
+}
+
+class Reclamo {
+  +id: UUID
+  +motivo: String
+  +descripcion: String
+  +estado: EstadoReclamo
+  +fechaApertura: DateTime
+  +fechaCierre: DateTime
+  +abrir()
+  +resolverConReembolso()
+  +resolverConReemplazo()
+}
+
+' Relaciones
+Cliente o-- Carrito
+Carrito o-- ItemCarrito
+ItemCarrito --> Producto
+Cliente --> Orden
+Orden o-- LineaOrden
+LineaOrden --> Producto
+Orden o-- Pago
+Orden o-- Envio
+Envio --> Repartidor
+Envio *-- Direccion
+Administrador --> Producto
+Administrador --> Reclamo
+Cliente --> Reclamo
+Reclamo --> Orden
+
+@enduml

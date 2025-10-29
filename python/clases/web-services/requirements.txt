@@ -1,0 +1,7 @@
+pip ==22.3.1
+wheel == 0.38.4
+Pillow == 9.5.0
+setuptools == 65.5.1
+packaging == 21.1
+numpy == 1.26.0
+requests == 2.31.0

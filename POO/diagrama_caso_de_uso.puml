@@ -1,0 +1,104 @@
+@startuml
+' Orientacion
+left to right direction
+skinparam linetype ortho
+
+' Estetica
+skinparam shadowing false
+skinparam backgroundColor #FFFFFF
+skinparam packageStyle rectangle
+skinparam usecaseBorderColor #555
+skinparam usecaseBackgroundColor #EEE
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam ArrowColor #555
+skinparam ArrowThickness 1
+skinparam ArrowFontSize 12
+skinparam StereotypeFontSize 12
+skinparam StereotypeFontColor #222
+
+actor "Cliente" as Cliente
+actor "Administrador" as Admin
+actor "Pasarela de Pago" as PSP
+actor "Sector Logística" as Logi
+actor "Repartidor" as Rider
+
+rectangle "Plataforma E-commerce" {
+
+  ' --- Bloque Catalogo/Carrito ---
+  rectangle "Compra" as BLOQUE_COMPRA {
+    usecase "Registrarse" as UC_Registro
+    usecase "Iniciar sesión" as UC_Login
+    usecase "Ver catálogo / Buscar" as UC_Buscar
+    usecase "Agregar al carrito" as UC_Agregar
+    usecase "Modificar carrito" as UC_Modif
+    usecase "Confirmar compra" as UC_Checkout
+    usecase "Verificar stock" as UC_Stock
+    usecase "Elegir medio de pago" as UC_ElegirPago
+    usecase "Indicar dirección de entrega" as UC_Dir
+    usecase "Procesar pago" as UC_Pago
+    usecase "Generar orden" as UC_Generar
+    usecase "Notificar logística" as UC_Notif
+    usecase "Rastrear pedido" as UC_Rastrear
+  }
+
+  ' --- Bloque Operacion/Logistica ---
+  rectangle "Operación" as BLOQUE_OP {
+    usecase "Preparar paquete" as UC_Preparar
+    usecase "Coordinar y registrar entrega" as UC_Entregar
+  }
+
+  ' --- Bloque Postventa ---
+  rectangle "Postventa" as BLOQUE_POST {
+    usecase "Abrir reclamo" as UC_AbrirReclamo
+    usecase "Resolver reclamo" as UC_Resolver
+    usecase "Procesar reembolso" as UC_Reembolso
+    usecase "Gestionar reemplazo" as UC_Reemplazo
+  }
+}
+
+' Relaciones principales
+Cliente --> UC_Registro
+Cliente --> UC_Login
+Cliente --> UC_Buscar
+Cliente --> UC_Agregar
+Cliente --> UC_Modif
+Cliente --> UC_Checkout
+Cliente --> UC_Rastrear
+Cliente --> UC_AbrirReclamo
+
+Admin --> UC_Resolver
+Admin --> UC_Generar
+Admin --> UC_Notif
+Admin --> UC_Preparar
+Admin --> UC_Entregar
+
+Logi --> UC_Preparar
+Logi --> UC_Entregar
+
+Rider --> UC_Entregar
+
+' Includes/extends
+UC_Agregar .> UC_Stock : <<include>>
+UC_Checkout .> UC_ElegirPago : <<include>>
+UC_Checkout .> UC_Dir : <<include>>
+UC_Checkout .> UC_Pago : <<include>>
+UC_Pago .> PSP : <<include>> (autorización)
+UC_Checkout .> UC_Generar : <<include>> (si pago OK)
+UC_Generar .> UC_Notif : <<include>>
+
+UC_Rastrear .> UC_Generar : <<extend>>
+UC_Entregar .> UC_Preparar : <<extend>>
+
+UC_Resolver .> UC_Reembolso : <<extend>>
+UC_Resolver .> UC_Reemplazo : <<extend>>
+
+' Enlaces invisible
+UC_ElegirPago -[hidden]- UC_Dir
+UC_Generar -[hidden]- UC_Notif
+UC_Preparar -[hidden]- UC_Entregar
+UC_Reembolso -[hidden]- UC_Reemplazo
+UC_Buscar -[hidden]- UC_Agregar
+UC_Modif -[hidden]- UC_Checkout
+
+@enduml
