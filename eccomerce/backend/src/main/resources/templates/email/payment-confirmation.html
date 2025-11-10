@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación de Pago - E-commerce</title>
+    <style>
+        /* Reset y base */
+        body,
+        table,
+        td,
+        p,
+        a,
+        li,
+        blockquote {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        table,
+        td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+
+        img {
+            -ms-interpolation-mode: bicubic;
+        }
+
+        /* Base */
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+            background-color: #f4f4f4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Container */
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header .logo {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 28px;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Content */
+        .content {
+            padding: 40px 30px;
+            color: #333333;
+            line-height: 1.6;
+        }
+
+        .content h2 {
+            color: #667eea;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .content h3 {
+            color: #667eea;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+        }
+
+        /* Order details */
+        .order-details {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .order-details p {
+            margin: 8px 0;
+            font-size: 14px;
+        }
+
+        .order-details strong {
+            color: #495057;
+        }
+
+        /* Products table */
+        .products-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        .products-table th {
+            background-color: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .products-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .products-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        /* Totals table */
+        .totals-table {
+            width: 100%;
+            max-width: 300px;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        .totals-table td {
+            padding: 8px 0;
+        }
+
+        .totals-table .total-row {
+            border-top: 2px solid #667eea;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .totals-table .total-row td {
+            padding-top: 15px;
+        }
+
+        /* Shipping section */
+        .shipping-section {
+            background-color: #e7f3ff;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #0066cc;
+        }
+
+        /* Next steps */
+        .next-steps ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .next-steps li {
+            margin-bottom: 8px;
+            color: #495057;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff !important;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Success message */
+        .success-message {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .success-message p {
+            margin: 0;
+            color: #155724;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .footer p {
+            margin: 5px 0;
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        .footer .social-links {
+            margin: 20px 0;
+        }
+
+        .footer .social-links a {
+            display: inline-block;
+            margin: 0 10px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Responsive */
+        @media only screen and (max-width: 600px) {
+            .email-container {
+                width: 100% !important;
+            }
+
+            .header,
+            .content,
+            .footer {
+                padding: 20px !important;
+            }
+
+            .header h1 {
+                font-size: 24px !important;
+            }
+
+            .content h2 {
+                font-size: 20px !important;
+            }
+
+            .products-table {
+                font-size: 12px;
+            }
+
+            .products-table th,
+            .products-table td {
+                padding: 8px;
+            }
+
+            .cta-button {
+                display: block !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1a1a1a;
+            }
+
+            .email-container {
+                background-color: #2d2d2d;
+                color: #e0e0e0;
+            }
+
+            .content {
+                color: #e0e0e0;
+            }
+
+            .order-details {
+                background-color: #333333;
+            }
+
+            .products-table td {
+                border-bottom-color: #444444;
+            }
+
+            .products-table tr:nth-child(even) {
+                background-color: #333333;
+            }
+
+            .shipping-section {
+                background-color: #1a4d7a;
+            }
+
+            .footer {
+                background-color: #333333;
+                border-top-color: #444444;
+            }
+
+            .footer p {
+                color: #cccccc;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="email-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">🛍️ E-commerce</div>
+            <h1>¡Pago Confirmado!</h1>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <h2>¡Excelente, <span th:text="${firstName}">Cliente</span>! 🎉</h2>
+
+            <div class="success-message">
+                <p>✅ Hemos recibido y procesado exitosamente el pago de tu pedido.</p>
+            </div>
+
+            <p>A continuación encontrarás todos los detalles de tu compra:</p>
+
+            <div class="order-details">
+                <h3>📋 Detalles del Pedido</h3>
+                <p><strong>Número de Orden:</strong> <span th:text="${orderNumber}">ORD-001</span></p>
+                <p><strong>Fecha:</strong> <span th:text="${orderDate}">2024-01-01</span></p>
+                <p><strong>Método de Pago:</strong> <span th:text="${paymentMethod}">MercadoPago</span></p>
+            </div>
+
+            <h3>🛒 Productos Comprados</h3>
+            <table class="products-table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th style="text-align: center;">Cant.</th>
+                        <th style="text-align: right;">Precio Unit.</th>
+                        <th style="text-align: right;">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="item : ${orderItems}">
+                        <td>
+                            <span th:text="${item.productName}">Producto</span>
+                            <span th:if="${item.variantName}" th:text="' - ' + ${item.variantName}"></span>
+                        </td>
+                        <td style="text-align: center;" th:text="${item.quantity}">1</td>
+                        <td style="text-align: right;" th:text="'$' + ${#numbers.formatDecimal(item.unitPrice, 1, 2)}">
+                            $0.00</td>
+                        <td style="text-align: right;" th:text="'$' + ${#numbers.formatDecimal(item.totalPrice, 1, 2)}">
+                            $0.00</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="text-align: right;">
+                <table class="totals-table">
+                    <tr>
+                        <td>Subtotal:</td>
+                        <td style="text-align: right;" th:text="'$' + ${#numbers.formatDecimal(subtotal, 1, 2)}">$0.00
+                        </td>
+                    </tr>
+                    <tr th:if="${taxAmount}">
+                        <td>Impuestos:</td>
+                        <td style="text-align: right;" th:text="'$' + ${#numbers.formatDecimal(taxAmount, 1, 2)}">$0.00
+                        </td>
+                    </tr>
+                    <tr th:if="${shippingAmount}">
+                        <td>Envío:</td>
+                        <td style="text-align: right;" th:text="'$' + ${#numbers.formatDecimal(shippingAmount, 1, 2)}">
+                            $0.00</td>
+                    </tr>
+                    <tr th:if="${discountAmount}">
+                        <td>Descuento:</td>
+                        <td style="text-align: right;" th:text="'$' + ${#numbers.formatDecimal(discountAmount, 1, 2)}">
+                            -$0.00</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td><strong>Total Pagado:</strong></td>
+                        <td style="text-align: right;" th:text="'$' + ${#numbers.formatDecimal(totalAmount, 1, 2)}">
+                            <strong>$0.00</strong></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="shipping-section" th:if="${shippingAddress}">
+                <h3>📍 Dirección de Envío</h3>
+                <p th:text="${shippingAddress}">Dirección de envío</p>
+            </div>
+
+            <h3>🚚 ¿Qué sucede ahora?</h3>
+            <ul>
+                <li>Procesaremos tu pedido en las próximas 24-48 horas hábiles</li>
+                <li>Recibirás actualizaciones sobre el estado de envío por email</li>
+                <li>Si tienes alguna pregunta, puedes contactarnos respondiendo este email</li>
+            </ul>
+
+            <div style="text-align: center; margin: 30px 0;">
+                <a th:href="${ordersUrl}" class="cta-button">
+                    📦 Ver Mis Pedidos
+                </a>
+            </div>
+
+            <p style="text-align: center; margin-top: 30px;">
+                ¡Gracias por tu compra! Esperamos que disfrutes tus productos. 🛍️<br>
+                <strong>El equipo de E-commerce</strong>
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>E-commerce</strong></p>
+            <p>Tu tienda en línea de confianza</p>
+            <div class="social-links">
+                <a href="#">Facebook</a> |
+                <a href="#">Instagram</a> |
+                <a href="#">Twitter</a>
+            </div>
+            <p>© 2025 E-commerce. Todos los derechos reservados.</p>
+            <p>Si no realizaste esta compra, contactanos inmediatamente.</p>
+        </div>
+    </div>
+</body>
+
+</html>

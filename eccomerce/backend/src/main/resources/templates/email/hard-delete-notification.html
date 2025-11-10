@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚨 ALERTA: Eliminación Permanente - E-commerce</title>
+    <style>
+        /* Reset y base */
+        body,
+        table,
+        td,
+        p,
+        a,
+        li,
+        blockquote {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        table,
+        td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+
+        img {
+            -ms-interpolation-mode: bicubic;
+        }
+
+        /* Base */
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+            background-color: #f4f4f4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Container */
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .header .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Content */
+        .content {
+            padding: 40px 30px;
+            color: #333333;
+            line-height: 1.6;
+        }
+
+        .content h2 {
+            color: #667eea;
+            font-size: 24px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .content h3 {
+            color: #495057;
+            font-size: 18px;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .content p {
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        /* Warning box */
+        .warning-box {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-box h2 {
+            color: #856404;
+            margin: 0 0 15px 0;
+        }
+
+        .warning-box p {
+            margin: 0;
+            color: #856404;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* Info box */
+        .info-box {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .info-box h3 {
+            margin: 0 0 15px 0;
+            color: #0c5460;
+        }
+
+        .info-box ul {
+            color: #0c5460;
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .info-box li {
+            margin-bottom: 8px;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .footer p {
+            margin: 5px 0;
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media only screen and (max-width: 600px) {
+            .email-container {
+                width: 100% !important;
+            }
+
+            .header,
+            .content,
+            .footer {
+                padding: 20px !important;
+            }
+
+            .header h1 {
+                font-size: 24px !important;
+            }
+
+            .content h2 {
+                font-size: 20px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="email-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">🛍️ E-commerce</div>
+            <h1>🚨 ALERTA DE SEGURIDAD</h1>
+            <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0 0; font-size: 16px;">
+                Eliminación Permanente Detectada
+            </p>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="warning-box">
+                <h2>🚨 ALERTA DE SEGURIDAD 🚨</h2>
+                <p>Se ha realizado una eliminación permanente en el sistema</p>
+            </div>
+
+            <div style="background-color: #f8f9fa; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+                <h3>Detalles de la Eliminación</h3>
+
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td style="padding: 8px 0; border-bottom: 1px solid #dee2e6; font-weight: bold; width: 150px;">
+                            Tipo de Entidad:</td>
+                        <td style="padding: 8px 0; border-bottom: 1px solid #dee2e6;" th:text="${entityType}">USER</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 0; border-bottom: 1px solid #dee2e6; font-weight: bold;">ID de Entidad:
+                        </td>
+                        <td style="padding: 8px 0; border-bottom: 1px solid #dee2e6;" th:text="${entityId}">123</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 0; border-bottom: 1px solid #dee2e6; font-weight: bold;">Administrador:
+                        </td>
+                        <td style="padding: 8px 0; border-bottom: 1px solid #dee2e6;" th:text="${adminEmail}">
+                            admin@ecommerce.com</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 0; border-bottom: 1px solid #dee2e6; font-weight: bold;">Fecha/Hora:
+                        </td>
+                        <td style="padding: 8px 0; border-bottom: 1px solid #dee2e6;"
+                            th:text="${#temporals.format(timestamp, 'dd/MM/yyyy HH:mm:ss')}">14/09/2025 19:48:15</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="background-color: #f8f9fa; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+                <h3>Detalles Adicionales</h3>
+                <p style="margin: 0; color: #6c757d;" th:text="${details}">Detalles de la eliminación...</p>
+            </div>
+
+            <div th:if="${auditLog}"
+                style="background-color: #e9ecef; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+                <h3>Registro de Auditoría</h3>
+
+                <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                    <tr>
+                        <td style="padding: 6px 0; border-bottom: 1px solid #dee2e6; font-weight: bold; width: 120px;">
+                            Usuario ID:</td>
+                        <td style="padding: 6px 0; border-bottom: 1px solid #dee2e6;" th:text="${auditLog.userId}">12345
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 6px 0; border-bottom: 1px solid #dee2e6; font-weight: bold;">Usuario Email:
+                        </td>
+                        <td style="padding: 6px 0; border-bottom: 1px solid #dee2e6;" th:text="${auditLog.userEmail}">
+                            user@example.com</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 6px 0; border-bottom: 1px solid #dee2e6; font-weight: bold;">Acción:</td>
+                        <td style="padding: 6px 0; border-bottom: 1px solid #dee2e6;" th:text="${auditLog.action}">
+                            HARD_DELETE_USER</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 6px 0; border-bottom: 1px solid #dee2e6; font-weight: bold;">Tipo Entidad:
+                        </td>
+                        <td style="padding: 6px 0; border-bottom: 1px solid #dee2e6;" th:text="${auditLog.entityType}">
+                            USER</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 6px 0; border-bottom: 1px solid #dee2e6; font-weight: bold;">ID Entidad:
+                        </td>
+                        <td style="padding: 6px 0; border-bottom: 1px solid #dee2e6;" th:text="${auditLog.entityId}">123
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 6px 0; border-bottom: 1px solid #dee2e6; font-weight: bold;">IP Address:
+                        </td>
+                        <td style="padding: 6px 0; border-bottom: 1px solid #dee2e6;" th:text="${auditLog.ipAddress}">
+                            192.168.1.1</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 6px 0; border-bottom: 1px solid #dee2e6; font-weight: bold;">User Agent:
+                        </td>
+                        <td style="padding: 6px 0; border-bottom: 1px solid #dee2e6;" th:text="${auditLog.userAgent}">
+                            Mozilla/5.0...</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 6px 0; border-bottom: 1px solid #dee2e6; font-weight: bold;">Éxito:</td>
+                        <td style="padding: 6px 0; border-bottom: 1px solid #dee2e6;">
+                            <span th:if="${auditLog.success}" style="color: #28a745; font-weight: bold;">✓ SÍ</span>
+                            <span th:unless="${auditLog.success}" style="color: #dc3545; font-weight: bold;">✗ NO</span>
+                        </td>
+                    </tr>
+                    <tr th:if="${auditLog.executionTimeMs}">
+                        <td style="padding: 6px 0; border-bottom: 1px solid #dee2e6; font-weight: bold;">Tiempo
+                            Ejecución:</td>
+                        <td style="padding: 6px 0; border-bottom: 1px solid #dee2e6;"
+                            th:text="${auditLog.executionTimeMs + 'ms'}">150ms</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 6px 0; font-weight: bold;">Timestamp:</td>
+                        <td style="padding: 6px 0;"
+                            th:text="${#temporals.format(auditLog.timestamp, 'dd/MM/yyyy HH:mm:ss')}">14/09/2025
+                            19:48:15</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="info-box">
+                <h3>Información de Seguridad</h3>
+                <ul>
+                    <li>Esta eliminación es permanente e irreversible</li>
+                    <li>Todos los datos relacionados han sido eliminados</li>
+                    <li>Se recomienda revisar los logs de auditoría para más detalles</li>
+                    <li>Si esta acción no fue autorizada, contacte inmediatamente al equipo de seguridad</li>
+                </ul>
+            </div>
+
+            <div
+                style="background-color: #f8f9fa; border-radius: 8px; padding: 15px; margin-top: 20px; border-left: 4px solid #dc3545;">
+                <p style="margin: 0; color: #495057; font-size: 14px; font-style: italic;">
+                    <strong>Nota importante:</strong> Este email es generado automáticamente por el sistema de
+                    auditoría.
+                    Todas las eliminaciones permanentes son registradas y notificadas a los administradores del sistema.
+                </p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>E-commerce - Sistema de Auditoría</strong></p>
+            <p>Notificación automática de eliminación permanente</p>
+            <p>© 2025 E-commerce. Todos los derechos reservados.</p>
+            <p style="color: #dc3545; font-weight: bold;">Este es un email automático del sistema de seguridad</p>
+        </div>
+    </div>
+</body>
+
+</html>

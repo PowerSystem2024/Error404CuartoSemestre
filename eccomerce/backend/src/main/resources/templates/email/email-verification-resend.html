@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reenvío de verificación - E-commerce</title>
+    <style>
+        /* Reset y base */
+        body,
+        table,
+        td,
+        p,
+        a,
+        li,
+        blockquote {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        table,
+        td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+
+        img {
+            -ms-interpolation-mode: bicubic;
+        }
+
+        /* Base */
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+            background-color: #f4f4f4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Container */
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .header .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Content */
+        .content {
+            padding: 40px 30px;
+            color: #333333;
+            line-height: 1.6;
+        }
+
+        .content h2 {
+            color: #667eea;
+            font-size: 24px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .content p {
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        /* Button */
+        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white !important;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Warning box */
+        .warning-box {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-box p {
+            margin: 0;
+            color: #856404;
+            font-size: 14px;
+        }
+
+        /* Info box */
+        .info-box {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .info-box p {
+            margin: 0;
+            color: #0c5460;
+            font-size: 14px;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .footer p {
+            margin: 5px 0;
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        .footer .social-links {
+            margin: 20px 0;
+        }
+
+        .footer .social-links a {
+            display: inline-block;
+            margin: 0 10px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Responsive */
+        @media only screen and (max-width: 600px) {
+            .email-container {
+                width: 100% !important;
+            }
+
+            .header,
+            .content,
+            .footer {
+                padding: 20px !important;
+            }
+
+            .header h1 {
+                font-size: 24px !important;
+            }
+
+            .content h2 {
+                font-size: 20px !important;
+            }
+
+            .button {
+                display: block !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1a1a1a;
+            }
+
+            .email-container {
+                background-color: #2d2d2d;
+                color: #e0e0e0;
+            }
+
+            .content {
+                color: #e0e0e0;
+            }
+
+            .footer {
+                background-color: #333333;
+                border-top-color: #444444;
+            }
+
+            .footer p {
+                color: #cccccc;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="email-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">🛍️ E-commerce</div>
+            <h1>Reenvío de verificación</h1>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <h2>Reenvío de verificación de cuenta 🔄</h2>
+
+            <p>Hola <span th:text="${firstName}">Usuario</span>,</p>
+
+            <p>Hemos recibido tu solicitud para reenviar el email de verificación de tu cuenta. Aquí tienes un nuevo
+                enlace
+                para verificar tu dirección de email:</p>
+
+            <div style="text-align: center; margin: 30px 0;">
+                <a th:href="${verificationUrl}" class="button">
+                    🔄 Verificar mi cuenta ahora
+                </a>
+            </div>
+
+            <div class="info-box">
+                <p><strong>¿No funciona el botón?</strong> Copia y pega este enlace en tu navegador:</p>
+                <p
+                    style="word-break: break-all; font-family: monospace; background-color: #f8f9fa; padding: 10px; border-radius: 4px; margin: 10px 0;">
+                    <span th:text="${verificationUrl}">https://...</span>
+                </p>
+            </div>
+
+            <div class="warning-box">
+                <p><strong>Recuerda:</strong> Este enlace expirará en 24 horas por seguridad.</p>
+                <p>Si continúas teniendo problemas, puedes solicitar otro reenvío desde nuestra página de login.</p>
+            </div>
+
+            <h3>¿Por qué necesitas verificar tu email?</h3>
+            <p>La verificación de email es necesaria para:</p>
+            <ul>
+                <li>🔐 Garantizar la seguridad de tu cuenta</li>
+                <li>📧 Recibir confirmaciones de pedidos</li>
+                <li>🛒 Acceder a ofertas exclusivas</li>
+                <li>📱 Recuperar tu contraseña si la olvidas</li>
+                <li>🔔 Mantenerte informado sobre tus pedidos</li>
+            </ul>
+
+            <p>Si no solicitaste este reenvío, puedes ignorar este email de forma segura.</p>
+
+            <p style="margin-top: 30px;">
+                Gracias por tu paciencia,<br>
+                <strong>El equipo de E-commerce</strong>
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>E-commerce</strong></p>
+            <p>Tu tienda en línea de confianza</p>
+            <div class="social-links">
+                <a href="#">Facebook</a> |
+                <a href="#">Instagram</a> |
+                <a href="#">Twitter</a>
+            </div>
+            <p>© 2025 E-commerce. Todos los derechos reservados.</p>
+            <p>Si no solicitaste este email, puedes ignorarlo de forma segura.</p>
+        </div>
+    </div>
+</body>
+
+</html>
