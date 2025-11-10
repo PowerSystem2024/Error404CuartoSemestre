@@ -1,0 +1,83 @@
+spring:
+  application:
+    name: ecommerce-backend
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE}
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: ${DB_DRIVER}
+  jpa:
+    hibernate:
+      ddl-auto: ${HIBERNATE_DDL_AUTO}
+    show-sql: ${HIBERNATE_SHOW_SQL}
+    properties:
+      hibernate:
+        dialect: ${HIBERNATE_DIALECT}
+        format_sql: ${HIBERNATE_FORMAT_SQL}
+        jdbc:
+          time_zone: America/Argentina/Buenos_Aires
+  sql:
+    init:
+      mode: ${SQL_INIT_MODE}
+  mail:
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: ${MAIL_SMTP_AUTH}
+          starttls:
+            enable: ${MAIL_SMTP_STARTTLS_ENABLE}
+            required: ${MAIL_SMTP_STARTTLS_REQUIRED}
+          ssl:
+            trust: ${MAIL_SMTP_SSL_TRUST}
+        debug: ${MAIL_DEBUG}
+
+server:
+  port: 8081
+#  servlet:
+#    context-path: /api
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiration: ${JWT_EXPIRATION}
+
+mercadopago:
+  access-token: ${MP_ACCESS_TOKEN}
+  public-key: ${MP_PUBLIC_KEY}
+  integrator-id: ${MP_INTEGRATOR_ID}
+  webhook-secret: ${MP_WEBHOOK_SECRET}
+  webhook-url: ${MP_WEBHOOK_URL}
+  success-url: ${MP_SUCCESS_URL}
+  failure-url: ${MP_FAILURE_URL}
+  pending-url: ${MP_PENDING_URL}
+
+cloudinary:
+  cloud-name: ${CLOUDINARY_CLOUD_NAME}
+  api-key: ${CLOUDINARY_API_KEY}
+  api-secret: ${CLOUDINARY_API_SECRET}
+  folder:
+    products: ${CLOUDINARY_FOLDER_PRODUCTS}
+    users: ${CLOUDINARY_FOLDER_USERS}
+    categories: ${CLOUDINARY_FOLDER_CATEGORIES}
+  secure: ${CLOUDINARY_SECURE}
+
+  endpoint:
+    health:
+      show-details: ${MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS:when-authorized}
+
+# Paths para redirección después de verificación
+app:
+  frontend:
+    verification-success-path: /verification-success
+    verification-error-path: /verification-error
